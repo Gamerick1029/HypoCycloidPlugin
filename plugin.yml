@@ -1,10 +1,13 @@
-name: MoveWordsPlugin
-main: io.github.Gamerick1029.MoveWordsPlugin
+name: HypoCycloidPlugin
+main: io.github.Gamerick1029.DrawHypoCycloid
 version: 1.0
 commands:
-  kit:
-    description: Gives a dumb, overpowered kit to the player
-    usage: /kit
-  moveword:
-    description: Spawns a word on a screen and moves it around
-    usage: /moveWord
+  drawhc:
+    description: "Draws a HypoCycloid made with the /makehc command"
+    usage: "Usage: /drawhc [NameOfHC]"
+  makehc:
+    description: "Creates a new named HypoCycloid"
+    usage: "Usage: /makehc [Name of HC] [Ratio of Circles] [Start Cycle] [End Cycle] [Screen Size]" 
+  clearhc:
+    description: 
+    usage: /clearhc 

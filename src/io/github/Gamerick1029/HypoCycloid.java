@@ -2,33 +2,59 @@ package io.github.Gamerick1029;
 
 public class HypoCycloid {
 
-	private double radius;
 	private double ratioOfCircles;
 	private int startCycle;
 	private int endCycle;
+	private int screenSize;
 	public int[][] dataPoints;
 	
-	public HypoCycloid(double k, int s, int e){
+	public HypoCycloid(double k, int s, int e, int ss){
 		ratioOfCircles = k;
 		startCycle = s;
 		endCycle = e;
+		screenSize = ss;
+		setDataPoints();
+	}
+		
+	public void setRatioOfCircles(double k){
+		ratioOfCircles = k;
+		setDataPoints();
 	}
 	
-	public HypoCycloid(double k){
-		ratioOfCircles = k;
-		startCycle = 0;
-		endCycle = 0;
+	public double getRatioOfCircles(){
+		return ratioOfCircles;
 	}
 	
-	public void setParameters(int r, double k, int s, int e){
-		ratioOfCircles = k;
+	public void setStartCycle(int s){
 		startCycle = s;
-		endCycle = e;
+		setDataPoints();
 	}
 	
-	public void setDataPoints(int screenSize){
+	public int getStartCycle(){
+		return startCycle;
+	}
+	
+	public void setEndCycle(int e){
+		endCycle = e;
+		setDataPoints();
+	}
+	
+	public int getEndCycle(){
+		return endCycle;
+	}
+	
+	public void setScreenSize(int ss){
+		screenSize = ss;
+		setDataPoints();
+	}
+	
+	public int getScreenSize(){
+		return screenSize;
+	}
+		
+	private void setDataPoints(){
 		dataPoints = new int[screenSize][screenSize];
-		radius = ((1/2)*(screenSize/ratioOfCircles));
+		double radius = ((1/2)*(screenSize/ratioOfCircles));
 		int x;
 		int y;
 		
@@ -53,17 +79,17 @@ public class HypoCycloid {
 		
 	}
 	
-	public int x0 (double r, double k, double theta, int screenWidth){
+	private int x0 (double r, double k, double theta, int screenWidth){
 		int unmodx0 = (int)((r*(k-1)*Math.cos(theta)) + (r*Math.cos((k-1)*theta)));
 		return unmodx0 + (int)(screenWidth/2);
 	}
 	
-	public int y0 (double r, double k, double theta, int screenWidth){
+	private int y0 (double r, double k, double theta, int screenWidth){
 		int unmody0 = (int)((r*(k-1)*Math.sin(theta)) - (r*Math.sin((k-1)*theta)));
 		return unmody0 + (int)(screenWidth/2);
 	}
 	
-    public int getNumeratorOfDouble(double d) {
+    private int getNumeratorOfDouble(double d) {
         String s = String.valueOf(d);
         int digitsDec = s.length() - 1 - s.indexOf('.');
         int denom = 1;
@@ -91,7 +117,7 @@ public class HypoCycloid {
 
 
 
-    public int gcd(int lnum, int snum) {
+    private int gcd(int lnum, int snum) {
 
     	if (snum == 0){
     		return lnum;
