@@ -2,14 +2,25 @@ package io.github.Gamerick1029;
 
 public class HypoCycloid {
 
-	private int radius;
+	private double radius;
 	private double ratioOfCircles;
 	private int startCycle;
 	private int endCycle;
 	public int[][] dataPoints;
 	
+	public HypoCycloid(double k, int s, int e){
+		ratioOfCircles = k;
+		startCycle = s;
+		endCycle = e;
+	}
+	
+	public HypoCycloid(double k){
+		ratioOfCircles = k;
+		startCycle = 0;
+		endCycle = 0;
+	}
+	
 	public void setParameters(int r, double k, int s, int e){
-		radius = r;
 		ratioOfCircles = k;
 		startCycle = s;
 		endCycle = e;
@@ -17,7 +28,7 @@ public class HypoCycloid {
 	
 	public void setDataPoints(int screenSize){
 		dataPoints = new int[screenSize][screenSize];
-		
+		radius = ((1/2)*(screenSize/ratioOfCircles));
 		int x;
 		int y;
 		
@@ -35,11 +46,21 @@ public class HypoCycloid {
 		}
 		
 		for (double theta = start; theta <= end; theta += fidelity){
-			x = (int)((radius*(ratioOfCircles-1)*Math.cos(theta)) + (radius*Math.cos((ratioOfCircles-1)*theta)));
-			y = (int)((radius*(ratioOfCircles-1)*Math.sin(theta)) - (radius*Math.sin((ratioOfCircles-1)*theta)));
+			x = x0(radius, ratioOfCircles, theta, screenSize);
+			y = y0(radius, ratioOfCircles, theta, screenSize);
 				dataPoints[x][y] = 1;
 		}
 		
+	}
+	
+	public int x0 (double r, double k, double theta, int screenWidth){
+		int unmodx0 = (int)((r*(k-1)*Math.cos(theta)) + (r*Math.cos((k-1)*theta)));
+		return unmodx0 + (int)(screenWidth/2);
+	}
+	
+	public int y0 (double r, double k, double theta, int screenWidth){
+		int unmody0 = (int)((r*(k-1)*Math.sin(theta)) - (r*Math.sin((k-1)*theta)));
+		return unmody0 + (int)(screenWidth/2);
 	}
 	
     public int getNumeratorOfDouble(double d) {
