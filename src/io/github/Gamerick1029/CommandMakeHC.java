@@ -19,24 +19,32 @@ public class CommandMakeHC implements CommandExecutor {
 		String currentName = player.getName();
 		
 		if (!plCycloids.containsKey(currentName)){
-			Location location = new Location(player.getWorld(), (plCycloids.size()*200) + 50, 56, -200);
+			Location location = new Location(player.getWorld(), (plCycloids.size()*200) + 100, 56, -100, 180, 0);
 			plCycloids.put(currentName, cycloids);
 			plLocations.put(currentName, location);
 		}
+		return parseInput(args);
 		
-		parseInput(args);
-		return false;
 	}
 	
-	public void parseInput(String[] args){
+	public boolean parseInput(String[] args){
 		HypoCycloid hc = new HypoCycloid(0,0,0,0);
 		
-		hc.setRatioOfCircles(Double.parseDouble(args[1]));
-		hc.setStartCycle(Integer.parseInt(args[2]));
-		hc.setEndCycle(Integer.parseInt(args[3]));
-		hc.setScreenSize(Integer.parseInt(args[4]));
+		if (plCycloids.get(player.getName()).containsKey(args[0])) {
+			hc = plCycloids.get(player.getName()).get(args[0]);
+		}
 		
-		plCycloids.get(player.getName()).put(args[0], hc);
+		try {
+			hc.setRatioOfCircles(Double.parseDouble(args[1]));
+			hc.setStartCycle(Integer.parseInt(args[2]));
+			hc.setEndCycle(Integer.parseInt(args[3]));
+			hc.setScreenSize(Integer.parseInt(args[4]));
+			plCycloids.get(player.getName()).put(args[0], hc);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		
 	}
 
 }

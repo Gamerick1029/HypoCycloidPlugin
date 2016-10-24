@@ -8,8 +8,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class DrawHypoCycloid extends JavaPlugin {
 
-	public static HashMap<String, HashMap<String, HypoCycloid>> cycloids;
-	public static HashMap<String, Location> playerLocations;
+	public static HashMap<String, HashMap<String, HypoCycloid>> cycloids = new HashMap<String, HashMap<String, HypoCycloid>>();
+	public static HashMap<String, Location> playerLocations = new HashMap<String, Location>();
 	public static Plugin plugin;
 		
 	@Override
@@ -17,8 +17,7 @@ public class DrawHypoCycloid extends JavaPlugin {
 		plugin = this;
 		this.getCommand("drawhc").setExecutor(new CommandDrawHC());
 		this.getCommand("makehc").setExecutor(new CommandMakeHC());
-		
-		
+		this.getCommand("clearhc").setExecutor(new CommandClearHC());
 	}
 	
 	@Override

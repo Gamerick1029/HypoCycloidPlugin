@@ -10,4 +10,4 @@ commands:
     usage: "Usage: /makehc [Name of HC] [Ratio of Circles] [Start Cycle] [End Cycle] [Screen Size]" 
   clearhc:
     description: 
-    usage: /clearhc 
+    usage: "Usage: /clearhc [Name of HC]"

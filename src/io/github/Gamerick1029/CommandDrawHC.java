@@ -1,6 +1,7 @@
 package io.github.Gamerick1029;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
@@ -17,14 +18,15 @@ public class CommandDrawHC implements CommandExecutor {
 		
 		player = (Player)sender;
 		
-		player.teleport(plLocations.get(player.getName()));
 		parseInput(args);
 		
 		return true;
 	}
 	
 	public void parseInput(String[] args){
-		if (plCycloids.get(player.getName()).get(args[0]) != null){
+		if (plCycloids.get(player.getName()).containsKey(args[0])){
+			plLocations.get(player.getName()).setZ(plCycloids.get(player.getName()).get(args[0]).getScreenSize() / 2);
+			player.teleport(plLocations.get(player.getName()));
 			drawCycloid(plCycloids.get(player.getName()).get(args[0]));
 		} else {
 			player.sendMessage("No such HypoCycloid found! Check spelling perhaps?");
@@ -35,18 +37,18 @@ public class CommandDrawHC implements CommandExecutor {
 	}
 	
 	public void drawCycloid(HypoCycloid cycloid){
-		int[][] currentData = cycloid.dataPoints;
+		ArrayList<Integer[]> data = cycloid.dataPoints;
 		int xBase;
 		int yBase = 56;
 		
 		xBase = (int)(plLocations.get(player.getName()).getX() - cycloid.getScreenSize()/2);
 		
-		for (int x = xBase; x < xBase + currentData.length; x++){
-			for (int y = yBase; y < yBase + currentData.length; y++){
-				
-			}
+		for(Integer[] i: data){
+			Drawing.drawBlock(player.getWorld(), i[0]+xBase, i[1]+yBase, 0, Material.LAPIS_BLOCK);
 		}
+		
 	}
 	
+
 
 }

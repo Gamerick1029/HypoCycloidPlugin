@@ -1,12 +1,14 @@
 package io.github.Gamerick1029;
 
+import java.util.ArrayList;
+
 public class HypoCycloid {
 
 	private double ratioOfCircles;
 	private int startCycle;
 	private int endCycle;
 	private int screenSize;
-	public int[][] dataPoints;
+	public ArrayList<Integer[]> dataPoints = new ArrayList<Integer[]>();
 	
 	public HypoCycloid(double k, int s, int e, int ss){
 		ratioOfCircles = k;
@@ -53,30 +55,35 @@ public class HypoCycloid {
 	}
 		
 	private void setDataPoints(){
-		dataPoints = new int[screenSize][screenSize];
-		double radius = ((1/2)*(screenSize/ratioOfCircles));
+		dataPoints.clear();
+		double radius = ((0.5)*(screenSize/ratioOfCircles));
 		int x;
 		int y;
 		
-		double fidelity = 0.1;
+		double fidelity = 0.01;
 		
 		double start;
 		double end;
 		
 		if (endCycle == 0) {
 			start = 0;
-			end = Math.PI*getNumeratorOfDouble(ratioOfCircles);
+			end = 2*Math.PI*getNumeratorOfDouble(ratioOfCircles);
 		} else {
-			start = Math.PI*startCycle;
-			end = Math.PI*endCycle;
+			start = 2*Math.PI*startCycle;
+			end = 2*Math.PI*endCycle;
 		}
 		
 		for (double theta = start; theta <= end; theta += fidelity){
 			x = x0(radius, ratioOfCircles, theta, screenSize);
 			y = y0(radius, ratioOfCircles, theta, screenSize);
-				dataPoints[x][y] = 1;
+			
+			Integer[] tempCoord = new Integer[2];
+			tempCoord[0] = x;
+			tempCoord[1] = y;
+			if (!dataPoints.contains(tempCoord)){
+				dataPoints.add(tempCoord);
+			}
 		}
-		
 	}
 	
 	private int x0 (double r, double k, double theta, int screenWidth){
