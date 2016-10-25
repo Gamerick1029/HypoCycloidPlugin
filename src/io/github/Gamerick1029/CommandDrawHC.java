@@ -1,5 +1,6 @@
 package io.github.Gamerick1029;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.*;
@@ -43,8 +44,19 @@ public class CommandDrawHC implements CommandExecutor {
 		
 		xBase = (int)(plLocations.get(player.getName()).getX() - cycloid.getScreenSize()/2);
 		
-		for(Integer[] i: data){
-			Drawing.drawBlock(player.getWorld(), i[0]+xBase, i[1]+yBase, 0, Material.LAPIS_BLOCK);
+		if (cycloid.getAnimate()){
+			for (int i = 0; i < data.size(); i++){
+				final int j = i;
+				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(DrawHypoCycloid.plugin, new Runnable() {
+					public void run() {
+						Drawing.drawBlock(player.getWorld(), data.get(j)[0]+xBase, data.get(j)[1]+yBase, 0, Material.LAPIS_BLOCK);
+					}
+				}, i * 3L);
+			}
+		} else {
+			for(Integer[] i: data){
+				Drawing.drawBlock(player.getWorld(), i[0]+xBase, i[1]+yBase, 0, Material.LAPIS_BLOCK);
+			}
 		}
 		
 	}

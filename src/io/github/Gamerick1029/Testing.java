@@ -7,7 +7,7 @@ import org.bukkit.command.ConsoleCommandSender;
 public class Testing {
 	
 	public static void main(String[] args){
-		HypoCycloid hc = new HypoCycloid(2.5, 0, 0, 50);
+//		HypoCycloid hc = new HypoCycloid(2.5, 0, 50, true);
 		
 	}
 	

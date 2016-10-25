@@ -28,7 +28,7 @@ public class CommandMakeHC implements CommandExecutor {
 	}
 	
 	public boolean parseInput(String[] args){
-		HypoCycloid hc = new HypoCycloid(0,0,0,0);
+		HypoCycloid hc = new HypoCycloid(0,0,0, false);
 		
 		if (plCycloids.get(player.getName()).containsKey(args[0])) {
 			hc = plCycloids.get(player.getName()).get(args[0]);
@@ -36,9 +36,9 @@ public class CommandMakeHC implements CommandExecutor {
 		
 		try {
 			hc.setRatioOfCircles(Double.parseDouble(args[1]));
-			hc.setStartCycle(Integer.parseInt(args[2]));
-			hc.setEndCycle(Integer.parseInt(args[3]));
-			hc.setScreenSize(Integer.parseInt(args[4]));
+			hc.setOffset(Integer.parseInt(args[2]));
+			hc.setScreenSize(Integer.parseInt(args[3]));
+			hc.setAnimate(Boolean.getBoolean(args[4]));
 			plCycloids.get(player.getName()).put(args[0], hc);
 			return true;
 		} catch (NumberFormatException e) {

@@ -5,16 +5,16 @@ import java.util.ArrayList;
 public class HypoCycloid {
 
 	private double ratioOfCircles;
-	private int startCycle;
-	private int endCycle;
+	private double offset;
 	private int screenSize;
+	private boolean animate;
 	public ArrayList<Integer[]> dataPoints = new ArrayList<Integer[]>();
 	
-	public HypoCycloid(double k, int s, int e, int ss){
+	public HypoCycloid(double k, int o, int ss, boolean anim){
 		ratioOfCircles = k;
-		startCycle = s;
-		endCycle = e;
+		offset = o;
 		screenSize = ss;
+		animate = anim;
 		setDataPoints();
 	}
 		
@@ -27,24 +27,6 @@ public class HypoCycloid {
 		return ratioOfCircles;
 	}
 	
-	public void setStartCycle(int s){
-		startCycle = s;
-		setDataPoints();
-	}
-	
-	public int getStartCycle(){
-		return startCycle;
-	}
-	
-	public void setEndCycle(int e){
-		endCycle = e;
-		setDataPoints();
-	}
-	
-	public int getEndCycle(){
-		return endCycle;
-	}
-	
 	public void setScreenSize(int ss){
 		screenSize = ss;
 		setDataPoints();
@@ -53,7 +35,16 @@ public class HypoCycloid {
 	public int getScreenSize(){
 		return screenSize;
 	}
+	
+	public void setAnimate(boolean anim) {
+		animate = anim;
+	}
 		
+	public boolean getAnimate() {
+		return animate;
+	}
+
+
 	private void setDataPoints(){
 		dataPoints.clear();
 		double radius = ((0.5)*(screenSize/ratioOfCircles));
@@ -65,17 +56,13 @@ public class HypoCycloid {
 		double start;
 		double end;
 		
-		if (endCycle == 0) {
 			start = 0;
 			end = 2*Math.PI*getNumeratorOfDouble(ratioOfCircles);
-		} else {
-			start = 2*Math.PI*startCycle;
-			end = 2*Math.PI*endCycle;
-		}
+
 		
 		for (double theta = start; theta <= end; theta += fidelity){
-			x = x0(radius, ratioOfCircles, theta, screenSize);
-			y = y0(radius, ratioOfCircles, theta, screenSize);
+			x = x0(radius, offset/100, ratioOfCircles, theta, screenSize);
+			y = y0(radius, offset/100, ratioOfCircles, theta, screenSize);
 			
 			Integer[] tempCoord = new Integer[2];
 			tempCoord[0] = x;
@@ -86,13 +73,13 @@ public class HypoCycloid {
 		}
 	}
 	
-	private int x0 (double r, double k, double theta, int screenWidth){
-		int unmodx0 = (int)((r*(k-1)*Math.cos(theta)) + (r*Math.cos((k-1)*theta)));
+	private int x0 (double r, double o, double k, double theta, int screenWidth){
+		int unmodx0 = (int)((r*(k-1)*Math.cos(theta)) + ((r+(r*o))*Math.cos((k-1)*theta)));
 		return unmodx0 + (int)(screenWidth/2);
 	}
 	
-	private int y0 (double r, double k, double theta, int screenWidth){
-		int unmody0 = (int)((r*(k-1)*Math.sin(theta)) - (r*Math.sin((k-1)*theta)));
+	private int y0 (double r, double o, double k, double theta, int screenWidth){
+		int unmody0 = (int)((r*(k-1)*Math.sin(theta)) - ((r+(r*o))*Math.sin((k-1)*theta)));
 		return unmody0 + (int)(screenWidth/2);
 	}
 	
@@ -132,5 +119,9 @@ public class HypoCycloid {
     		return gcd(snum, lnum%snum);
     	}
     }
+
+	public void setOffset(int o) {
+		offset = o;		
+	}
 	
 }
